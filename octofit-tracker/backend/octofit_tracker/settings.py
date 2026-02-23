@@ -25,7 +25,24 @@ SECRET_KEY = 'django-insecure-elg+8g5_ae4f(v@^s0d0!b9(xjyq)-o58wr6d5f^jil5_xd0-z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+codespace_name = os.environ.get('CODESPACE_NAME')
+allowed_hosts = ['localhost', '127.0.0.1']
+if codespace_name:
+    allowed_hosts.append(f"{codespace_name}-8000.app.github.dev")
+    allowed_hosts.append(f"{codespace_name}-3000.app.github.dev")
+ALLOWED_HOSTS = allowed_hosts
+
+# Trust HTTPS headers from Codespace tunnel proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
+# Allow CSRF from Codespace and localhost
+csrf_origins = ['http://localhost:8000', 'http://localhost:3000']
+if codespace_name:
+    csrf_origins.append(f"https://{codespace_name}-8000.app.github.dev")
+    csrf_origins.append(f"https://{codespace_name}-3000.app.github.dev")
+CSRF_TRUSTED_ORIGINS = csrf_origins
 
 
 # Application definition
@@ -90,6 +107,14 @@ DATABASES = {
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'octofit_tracker.renderers.MongoJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+}
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
