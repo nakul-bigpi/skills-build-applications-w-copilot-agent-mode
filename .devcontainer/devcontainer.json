@@ -31,14 +31,18 @@
         8000, // Django default port
         27017 // MongoDB default port
     ],
-    "portAttributes": {
+    "portsAttributes": {
       "3000": { // React port attributes
       "label": "octofit-tracker",
-      "requireLocalPort": true
+      "visibility": "public"
       },
       "8000": { // Django port attributes
       "label": "octofit-api",
-      "requireLocalPort": true
+      "visibility": "public"
+      },
+      "27017": { // MongoDB port attributes
+      "label": "octofit-mongodb",
+      "visibility": "private"
       }
     }
 }
