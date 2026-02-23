@@ -3,15 +3,15 @@ import React, { useEffect, useState } from 'react';
 function getEndpoint(name) {
   const codespace = process.env.REACT_APP_CODESPACE_NAME;
   return codespace
-    ? `https://${codespace}-8000.app.github.dev/api/${name}/`
-    : `http://localhost:8000/api/${name}/`;
+    ? `https://${codespace}-8000.app.github.dev/api/users/`
+    : `http://localhost:8000/api/users/`;
 }
 
 export default function Users() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const endpoint = getEndpoint('users');
+    const endpoint = getEndpoint();
     console.log('Fetching Users from', endpoint);
     fetch(endpoint)
       .then((res) => res.json())

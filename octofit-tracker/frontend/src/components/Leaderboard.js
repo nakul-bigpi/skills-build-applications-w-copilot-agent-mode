@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-function getEndpoint(name) {
+function getEndpoint() {
   const codespace = process.env.REACT_APP_CODESPACE_NAME;
   return codespace
-    ? `https://${codespace}-8000.app.github.dev/api/${name}/`
-    : `http://localhost:8000/api/${name}/`;
+    ? `https://${codespace}-8000.app.github.dev/api/leaderboard/`
+    : `http://localhost:8000/api/leaderboard/`;
 }
 
 export default function Leaderboard() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const endpoint = getEndpoint('leaderboard');
+    const endpoint = getEndpoint();
     console.log('Fetching Leaderboard from', endpoint);
     fetch(endpoint)
       .then((res) => res.json())

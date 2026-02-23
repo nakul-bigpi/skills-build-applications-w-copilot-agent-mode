@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-function getEndpoint(name) {
+function getEndpoint() {
   const codespace = process.env.REACT_APP_CODESPACE_NAME;
   return codespace
-    ? `https://${codespace}-8000.app.github.dev/api/${name}/`
-    : `http://localhost:8000/api/${name}/`;
+    ? `https://${codespace}-8000.app.github.dev/api/workouts/`
+    : `http://localhost:8000/api/workouts/`;
 }
 
 export default function Workouts() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const endpoint = getEndpoint('workouts');
+    const endpoint = getEndpoint();
     console.log('Fetching Workouts from', endpoint);
     fetch(endpoint)
       .then((res) => res.json())
